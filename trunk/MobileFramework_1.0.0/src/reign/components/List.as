@@ -91,7 +91,7 @@ package reign.components
 			if(_data == null || _itemRendererClass == null || _columnCount <= 0 || _rowCount <= 0) return;
 			
 			//与上次显示时的状态相比，无变更
-			if(_data == _lastShowState.data && _columnCount == _lastShowState.columnCount && _columnCount == _lastShowState.columnCount) return;
+			if(_data == _lastShowState.data && _columnCount == _lastShowState.columnCount && _rowCount == _lastShowState.rowCount) return;
 			
 			//保存本次显示时的状态
 			_lastShowState.data			= _data;

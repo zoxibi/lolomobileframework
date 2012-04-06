@@ -192,8 +192,11 @@ package reign.utils
 				
 				if(obj != null)
 				{
-					initToolTip(obj, item.@toolTip);
-					initJsonString(obj, item.@properties);
+					if(!(obj is Container) && !(obj is ComboBox)) {
+						initToolTip(obj, item.@toolTip);
+						initJsonString(obj, item.@properties);
+					}
+					
 					var autoAlignStr:String = item.@autoAlign;
 					if(autoAlignStr != "") autoAlign(obj, AdobeJSON.decode(autoAlignStr));
 					
