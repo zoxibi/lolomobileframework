@@ -97,6 +97,10 @@ package reign.utils
 				if(d > 0) str += "." + d.toString();
 			}
 			
+			//负数
+			if(str.charAt(0) == "-" && str.charAt(1) == thousandsSep) {
+				str = "-" + str.slice(2, str.length);
+			}
 			return str;
 		}
 		//

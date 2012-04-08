@@ -44,9 +44,9 @@ package reign.core
 		{
 			super();
 			_backgroundC = AutoUtil.init(new Sprite(), this);
-			_panelC = AutoUtil.init(new Sprite(), this);
 			_tabBtnGroup = AutoUtil.init(new ItemGroup(), this);
 			_closeBtn = AutoUtil.init(new BaseButton(), this);
+			_panelC = AutoUtil.init(new Sprite(), this);
 			
 			style = Common.style.getStyle("window");
 			Common.ui.centerToStage(this);

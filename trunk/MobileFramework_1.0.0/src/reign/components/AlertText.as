@@ -10,7 +10,7 @@ package reign.components
 	import reign.common.Constants;
 	import reign.core.RTextField;
 	import reign.ui.ICenterDisplayObject;
-
+	
 	/**
 	 * 提示文本
 	 * 文本会在指定时间后显示（可设置显示动画持续时间），指定时间后隐藏（可设置隐藏动画持续时间），并且可以在隐藏结束后回调指定函数
@@ -192,6 +192,14 @@ package reign.components
 		public function get centerHeight():uint
 		{
 			return height;
+		}
+		
+		
+		override public function set text(value:String):void
+		{
+			super.text = value;
+			x = x;
+			y = y;
 		}
 		
 		
