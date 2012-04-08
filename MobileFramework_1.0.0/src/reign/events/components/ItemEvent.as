@@ -3,7 +3,7 @@ package reign.events.components
 	import flash.events.Event;
 	
 	import reign.components.IItemRenderer;
-
+	
 	/**
 	 * 子项事件
 	 * @author LOLO
@@ -15,6 +15,9 @@ package reign.events.components
 		
 		/**鼠标点击子项*/
 		public static const ITEM_CLICK:String = "itemClick";
+		
+		/**鼠标双击击子项（需要IItemRenderer自己实现，冒泡抛出）*/
+		public static const ITEM_DOUBLE_CLICK:String = "itemDoubleClick";
 		
 		/**选中子项*/
 		public static const ITEM_SELECTED:String = "itemSelected";
