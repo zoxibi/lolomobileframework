@@ -50,7 +50,7 @@ package
 			
 			Common.version = "1.0.0";
 			Common.resPath = "E:\\MobileFramework\\res\\zh_CN_v1.0.0\\";
-			Common.serviceUrl = "http://192.168.1.100:8080/voyage/";//登录和注册的URL地址
+			Common.serviceUrl = "http://192.168.1.100:8080/Service/";//登录和注册的URL地址
 			
 			if(Common.bin == "release")
 			{
