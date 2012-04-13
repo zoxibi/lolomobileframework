@@ -10,16 +10,14 @@ package reign.common
 	{
 		/**
 		 * 播放背景音乐或音效，并返回音频的SoundChannel对象
-		 * @param configName 音频在SoundConfig中的配置名称
-		 * @param soundName 音频的名称
+		 * @param soundName 音频类的完整定义名称
 		 * @param isBackgroundMusic 是否为背景音乐
 		 * @param clearOther 是否清除正在播放的背景音乐或音效
 		 * @param repeatCount 重复播放次数
 		 * @param replay 如果当前正在播放该音频，是否需要重新播放
 		 * @return 
 		 */
-		function play(configName:String,
-					  soundName:String,
+		function play(soundName:String,
 					  isBackgroundMusic:Boolean = false,
 					  clearOther:Boolean = true,
 					  repeatCount:uint = 0,
@@ -28,11 +26,10 @@ package reign.common
 		
 		/**
 		 * 停止指定url所有声音的播放
-		 * @param configName 音频在SoundConfig中的配置名称
-		 * @param soundName 音频的名称
+		 * @param soundName 音频类的完整定义名称
 		 * @param isBackgroundMusic 是否为背景音乐
 		 */
-		function stop(configName:String, soundName:String, isBackgroundMusic:Boolean=true):void;
+		function stop(soundName:String, isBackgroundMusic:Boolean=true):void;
 		
 		
 		/**

@@ -2,6 +2,7 @@ package game.common
 {
 	import mainUI.*;
 	import skin.*;
+//	import sound.*;
 	
 
 	/**
@@ -32,6 +33,10 @@ package game.common
 			
 			
 			//GameUI.swc
+			
+			
+			//Sound.swc
+//			BG1;
 		}
 		//
 	}
