@@ -29,7 +29,7 @@ package reign.common
 		 * @param soundName 音频类的完整定义名称
 		 * @param isBackgroundMusic 是否为背景音乐
 		 */
-		function stop(soundName:String, isBackgroundMusic:Boolean=true):void;
+		function stop(soundName:String, isBackgroundMusic:Boolean=false):void;
 		
 		
 		/**
