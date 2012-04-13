@@ -1,14 +1,10 @@
 package reign.common
 {
 	import flash.events.Event;
-	import flash.events.IOErrorEvent;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
-	import flash.media.SoundLoaderContext;
-	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
-	
-	import reign.utils.StringUtil;
+	import flash.utils.getDefinitionByName;
 
 	/**
 	 * 音频管理
@@ -63,16 +59,14 @@ package reign.common
 		
 		/**
 		 * 播放背景音乐或音效，并返回音频的SoundChannel对象
-		 * @param configName 音频在SoundConfig中的配置名称
-		 * @param soundName 音频的名称
+		 * @param soundName 音频类的完整定义名称
 		 * @param isBackgroundMusic 是否为背景音乐
 		 * @param clearOther 是否清除正在播放的背景音乐或音效
 		 * @param repeatCount 重复播放次数
 		 * @param replay 如果当前正在播放该音频，是否需要重新播放
 		 * @return 
 		 */
-		public function play(configName:String,
-							 soundName:String,
+		public function play(soundName:String,
 							 isBackgroundMusic:Boolean = false,
 							 clearOther:Boolean = true,
 							 repeatCount:uint = 0,
@@ -82,23 +76,19 @@ package reign.common
 			if(!_backgroundMusicEnabled && isBackgroundMusic) return null;
 			if(!_effectSoundEnabled && !isBackgroundMusic) return null;
 			
-			//获取音频的url
-			var url:String = getSoundUrl(configName, soundName);
-			
 			//拿取音频
 			var sound:Sound;
-			if(_soundList[url] == null) {
-				sound = new Sound();
-				sound.addEventListener(IOErrorEvent.IO_ERROR, sound_ioErrorHandler);
-				sound.load(new URLRequest(url), new SoundLoaderContext(1000, true));
-				_soundList[url] = sound;
+			if(_soundList[soundName] == null) {
+				var sndClass:Class = getDefinitionByName(soundName) as Class;
+				sound = new sndClass();
+				_soundList[soundName] = sound;
 			}
 			else {
-				sound = _soundList[url];
+				sound = _soundList[soundName];
 			}
 			
 			//声音的播放信息（正在播放时才有值）
-			var sndChannelInfo:Array = isBackgroundMusic ? _playingBGMusicList[url] : _playingEffectSndList[url];
+			var sndChannelInfo:Array = isBackgroundMusic ? _playingBGMusicList[soundName] : _playingEffectSndList[soundName];
 			
 			//正在播放该声音，并且不需要重新播放（只能更改和返回同一声音列表中的第一个声音）
 			if(sndChannelInfo != null && !replay) {
@@ -126,15 +116,15 @@ package reign.common
 			//没有对应的正在播放列表
 			if(sndChannelInfo == null || clearOther) {
 				isBackgroundMusic ?
-					_playingBGMusicList[url] = []:
-					_playingEffectSndList[url] = [];
+					_playingBGMusicList[soundName] = []:
+					_playingEffectSndList[soundName] = [];
 			}
 			
 			//保存信息到对应的正在播放列表
-			var info:Object = {sndChannel:sndChannel, repeatCount:repeatCount, currentCount:0, url:url};
+			var info:Object = {sndChannel:sndChannel, repeatCount:repeatCount, currentCount:0, url:soundName};
 			isBackgroundMusic ?
-				_playingBGMusicList[url].push(info) :
-				_playingEffectSndList[url].push(info);
+				_playingBGMusicList[soundName].push(info) :
+				_playingEffectSndList[soundName].push(info);
 			
 			sndChannel.addEventListener(Event.SOUND_COMPLETE, soundCompleteHandler);
 			
@@ -203,28 +193,13 @@ package reign.common
 		
 		
 		/**
-		 * 加载音频失败
-		 * @param event
-		 */
-		private function sound_ioErrorHandler(event:Event):void
-		{
-			trace("加载音频失败", event.target.url);
-		}
-		
-		
-		
-		/**
 		 * 停止指定url所有声音的播放
-		 * @param configName 音频在SoundConfig中的配置名称
-		 * @param soundName 音频的名称
+		 * @param soundName 音频类的完整定义名称
 		 * @param isBackgroundMusic 是否为背景音乐
 		 */
-		public function stop(configName:String, soundName:String, isBackgroundMusic:Boolean=true):void
+		public function stop(soundName:String, isBackgroundMusic:Boolean=true):void
 		{
-			//获取音频的url
-			var url:String = getSoundUrl(configName, soundName);
-			
-			var list:Array = isBackgroundMusic ? _playingBGMusicList[url] : _playingEffectSndList[url];
+			var list:Array = isBackgroundMusic ? _playingBGMusicList[soundName] : _playingEffectSndList[soundName];
 			
 			if(list != null) {
 				for(var i:int = 0; i < list.length; i++) {
@@ -235,10 +210,10 @@ package reign.common
 			}
 			
 			if(isBackgroundMusic) {
-				delete _playingBGMusicList[url];
+				delete _playingBGMusicList[soundName];
 			}
 			else {
-				delete _playingEffectSndList[url];
+				delete _playingEffectSndList[soundName];
 			}
 		}
 		
@@ -301,21 +276,6 @@ package reign.common
 		public function get effectSoundEnabled():Boolean { return _effectSoundEnabled; }
 		
 		
-		
-		
-		/**
-		 * 获取音频的url
-		 * @param configName 音频在SoundConfig中的配置名称
-		 * @param soundName 音频的名称
-		 * @return 
-		 */
-		private function getSoundUrl(configName:String, soundName:String):String
-		{
-//			var url:String = Common.config.getSoundConfig(configName);
-//			url = StringUtil.substitute(url, soundName);
-//			return Common.getResUrl(url);
-			return "";
-		}
 		//
 	}
 }
