@@ -12,7 +12,7 @@ package reign.components
 	
 	import reign.common.Common;
 	import reign.utils.AutoUtil;
-
+	
 	/**
 	 * 滚动条
 	 * @author LOLO
@@ -138,6 +138,7 @@ package reign.components
 				_content.addEventListener(MouseEvent.MOUSE_DOWN, content_mouseDownHandler);
 				
 				//绘制内容的空白区域
+				_content.graphics.clear();
 				_content.graphics.beginFill(0x0, 0.001);
 				_content.graphics.drawRect(0, 0, _content.width, _content.height);
 				_content.graphics.endFill();
@@ -173,7 +174,7 @@ package reign.components
 			
 			_startInfo = {
 				contentX:_content.x, contentY:_content.y,
-				mouseX:mouseX, mouseY:mouseY
+					mouseX:mouseX, mouseY:mouseY
 			};
 			_moveInfo = {
 				mouseX:mouseX, mouseY:mouseY
@@ -192,8 +193,8 @@ package reign.components
 		{
 			//移动到正常应该显示的位置
 			var p:int = (_direction == VERTICAL)
-						? (mouseY - _startInfo.mouseY + _startInfo.contentY)
-						: (mouseX - _startInfo.mouseX + _startInfo.contentX);
+				? (mouseY - _startInfo.mouseY + _startInfo.contentY)
+				: (mouseX - _startInfo.mouseX + _startInfo.contentX);
 			moveContent(p);
 			
 			
@@ -279,18 +280,10 @@ package reign.components
 				TweenMax.delayedCall(bufferTime / 1000 * 0.3, decelerationTest);
 				TweenMax.delayedCall(bufferTime / 1000 * 0.6, decelerationTest);
 				TweenMax.delayedCall(bufferTime / 1000 * 0.8, decelerationTest);
-				
-//				trace("加速距离:", distance);
-//				trace("加速时间:", time);
 			}
 			else {
 				moveContent(_content[_xy], false, true, true, true);
 			}
-			
-//			trace(_moveInfo.direction);
-//			trace(_moveInfo.distanceList);
-//			trace(_moveInfo.timeList);
-//			trace("------------------------------------------");
 		}
 		
 		
@@ -348,7 +341,7 @@ package reign.components
 				
 				thumbSize = _thumbNormalSize - int((p - _disArea[_xy]) / 2);
 			}
-			//鼠标往上或往左拖，超出显示范围
+				//鼠标往上或往左拖，超出显示范围
 			else if(p < minP) {
 				if(isSetP) p = minP + int((p - minP) / 2);
 				if(p - minP < -_disArea[_wh] / 2) {
@@ -463,6 +456,8 @@ package reign.components
 		 */
 		private function scrollToPosition(p:int):void
 		{
+			if(!_isShow) return;
+			
 			var minP:int = -_content[_wh] + _disArea[_xy] + _disArea[_wh];//最小位置
 			
 			//不是移动到底部和顶部
