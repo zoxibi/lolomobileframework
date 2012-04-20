@@ -134,19 +134,20 @@ package reign.components
 				if(_thumbNormalSize < thumbMinSize) _thumb[_wh] = thumbMinSize;
 				_thumb[_wh] = _thumbNormalSize;
 				
-				
 				_content.addEventListener(MouseEvent.MOUSE_DOWN, content_mouseDownHandler);
 				
-				//绘制内容的空白区域
-				_content.graphics.clear();
-				_content.graphics.beginFill(0x0, 0.001);
-				_content.graphics.drawRect(0, 0, _content.width, _content.height);
-				_content.graphics.endFill();
+				moveContent(_content[_xy], true, true, true);
 				
 				if(isShow && !nowIsShow) {
 					alpha = 1;
 					hide(hideEffectDelay);
 				}
+				
+				//绘制内容的空白区域
+				_content.graphics.beginFill(0x0, 0.001);
+				_content.graphics.drawRect(0, 0, _content.width, _content.height);
+				_content.graphics.endFill();
+				
 			}
 			else {
 				hide();
