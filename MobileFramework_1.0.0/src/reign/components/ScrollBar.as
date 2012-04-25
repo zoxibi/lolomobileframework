@@ -55,6 +55,8 @@ package reign.components
 		private var _thumbNormalSize:int;
 		/**内容是否在回滚过程中*/
 		private var _isRollback:Boolean;
+		/**上次更新时的位置*/
+		private var _lastPoint:Point = new Point();
 		
 		/**隐藏动画的持续时间(单位:秒)*/
 		public var hideEffectDuration:Number = 0.5;
@@ -122,6 +124,8 @@ package reign.components
 		 */
 		public function update(isShow:Boolean=true):void
 		{
+			TweenMax.killTweensOf(_content);
+			
 			var nowIsShow:Boolean = _isShow;//当前是否为显示状态
 			
 			_content.graphics.clear();
@@ -181,23 +185,27 @@ package reign.components
 				mouseX:mouseX, mouseY:mouseY
 			};
 			
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, stage_mouseMoveHandler);
+			stage.addEventListener(Event.ENTER_FRAME, stage_mouseMoveHandler);
 			stage.addEventListener(MouseEvent.MOUSE_UP, stage_mouseUpHandler);
 			stage.addEventListener(Event.MOUSE_LEAVE, stage_mouseUpHandler);
 		}
+		
 		
 		/**
 		 * 鼠标在场景移动（按下状态）
 		 * @param event
 		 */
-		private function stage_mouseMoveHandler(event:MouseEvent):void
+		private function stage_mouseMoveHandler(event:Event):void
 		{
+			if(_lastPoint.x == mouseX, _lastPoint.y == mouseY) return;
+			_lastPoint = new Point(mouseX, mouseY);
+			
+			
 			//移动到正常应该显示的位置
 			var p:int = (_direction == VERTICAL)
 				? (mouseY - _startInfo.mouseY + _startInfo.contentY)
 				: (mouseX - _startInfo.mouseX + _startInfo.contentX);
 			moveContent(p);
-			
 			
 			//移动的距离
 			var distance:int = Point.distance(new Point(_moveInfo.mouseX, _moveInfo.mouseY), new Point(mouseX, mouseY));
@@ -230,7 +238,7 @@ package reign.components
 		 */
 		private function stage_mouseUpHandler(event:Event):void
 		{
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE, stage_mouseMoveHandler);
+			stage.removeEventListener(Event.ENTER_FRAME, stage_mouseMoveHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_UP, stage_mouseUpHandler);
 			stage.removeEventListener(Event.MOUSE_LEAVE, stage_mouseUpHandler);
 			
@@ -240,18 +248,18 @@ package reign.components
 				return;
 			}
 			
-			//之前十个移动动作内，是否有加速动作（移动距离大于10的动作）
+			//之前十个移动动作内，是否有加速动作（移动距离大于指定值的动作）
 			var isSpeedup:Boolean;//是否有加速
 			var distance:int;//加速距离
 			var time:int;//加速用时
 			var i:int = _moveInfo.distanceList.length - Math.min(10, _moveInfo.distanceList.length);
 			for(; i < _moveInfo.distanceList.length; i++) {
-				if(!isSpeedup && _moveInfo.distanceList[i] > 10) {
+				if(!isSpeedup && _moveInfo.distanceList[i] > 40) {
 					isSpeedup = true;
 					time = _moveInfo.timeList[i];
 				}
 				if(isSpeedup) {
-					distance += _moveInfo.distanceList[i];
+					distance += _moveInfo.distanceList[i] / 3;
 				}
 			}
 			
@@ -265,7 +273,7 @@ package reign.components
 				time = _moveInfo.timeList[_moveInfo.timeList.length - 1] - time;
 				
 				//加速运动的倍数
-				var multiple:Number = distance / time;
+				var multiple:Number = (time == 0) ? 0.8 : distance / time;
 				
 				//减速缓冲的移动值
 				var value:int = _disArea[_wh] * multiple;

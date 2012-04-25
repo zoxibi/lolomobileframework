@@ -110,7 +110,7 @@ package reign.components
 			//重排子项
 			for(var i:int = 0 ; i < _itemList.length; i++)
 			{
-				if(delIndex == -1) {
+				if(delIndex != -1) {
 					_itemList[i].index = i - 1;
 				}
 				else if(_itemList[i] == item) {
