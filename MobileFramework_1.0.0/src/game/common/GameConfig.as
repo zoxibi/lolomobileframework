@@ -1,7 +1,7 @@
 package game.common
 {
-	import reign.common.Common;
-	import reign.utils.StringUtil;
+	import lolo.common.Common;
+	import lolo.utils.StringUtil;
 
 	/**
 	 * 游戏相关配置

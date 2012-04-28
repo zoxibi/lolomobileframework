@@ -1,6 +1,6 @@
 package game.module.gameUI.view
 {
-	import reign.core.Module;
+	import lolo.core.Module;
 	
 	/**
 	 * 游戏UI

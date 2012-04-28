@@ -9,9 +9,9 @@ package game.module.core.view
 	import game.module.testScene.view.TestScene;
 	import game.ui.RequestModal;
 	
-	import reign.common.Common;
-	import reign.common.Constants;
-	import reign.common.UIManager;
+	import lolo.common.Common;
+	import lolo.common.Constants;
+	import lolo.common.UIManager;
 
 	/**
 	 * 游戏用户界面管理

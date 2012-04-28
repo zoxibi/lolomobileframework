@@ -1,6 +1,6 @@
 package game.module.core.view
 {
-	import reign.common.IUIManager;
+	import lolo.common.IUIManager;
 	/**
 	 * 游戏用户界面管理
 	 * @author LOLO

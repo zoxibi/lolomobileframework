@@ -1,6 +1,6 @@
 package game.module.testScene.view
 {
-	import reign.core.IScene;
+	import lolo.core.IScene;
 	
 	/**
 	 * 测试场景接口
