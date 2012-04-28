@@ -5,8 +5,8 @@ package game.net
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	
-	import reign.common.Common;
-	import reign.data.RequestModel;
+	import lolo.common.Common;
+	import lolo.data.RequestModel;
 	
 	/**
 	 * Http请求数据加载器

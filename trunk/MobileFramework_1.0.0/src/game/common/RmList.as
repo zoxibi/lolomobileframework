@@ -1,6 +1,6 @@
 package game.common
 {
-	import reign.data.RequestModel;
+	import lolo.data.RequestModel;
 
 	/**
 	 * 与后台通信的数据模型列表

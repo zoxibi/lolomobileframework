@@ -8,14 +8,14 @@ package game.ui
 	import game.common.GameConstants;
 	import game.common.XmlERConstants;
 	
-	import reign.common.Common;
-	import reign.common.Constants;
-	import reign.components.ModalBackground;
-	import reign.data.RequestModel;
-	import reign.ui.IRequestModal;
-	import reign.utils.AutoUtil;
-	import reign.utils.EmbedResUtils;
-	import reign.utils.RTimer;
+	import lolo.common.Common;
+	import lolo.common.Constants;
+	import lolo.components.ModalBackground;
+	import lolo.data.RequestModel;
+	import lolo.ui.IRequestModal;
+	import lolo.utils.AutoUtil;
+	import lolo.utils.EmbedResUtils;
+	import lolo.utils.RTimer;
 	
 	/**
 	 * 将与服务端通信的请求进行模态的界面

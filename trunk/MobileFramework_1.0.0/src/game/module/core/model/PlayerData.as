@@ -1,6 +1,6 @@
 package game.module.core.model
 {
-	import reign.utils.bind.Data;
+	import lolo.utils.bind.Data;
 	
 	/**
 	 * 玩家数据

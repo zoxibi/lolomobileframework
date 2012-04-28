@@ -2,9 +2,9 @@ package game.module.testScene.view
 {
 	import flash.events.MouseEvent;
 	
-	import reign.common.Common;
-	import reign.components.Image;
-	import reign.core.Scene;
+	import lolo.common.Common;
+	import lolo.components.Image;
+	import lolo.core.Scene;
 	
 	/**
 	 * 测试场景

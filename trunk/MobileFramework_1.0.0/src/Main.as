@@ -15,15 +15,16 @@ package
 	
 	import mainUI.DeveloperMovie;
 	
-	import reign.common.Common;
-	import reign.common.ConfigManager;
-	import reign.common.LanguageManager;
-	import reign.common.SoundManager;
-	import reign.common.StyleManager;
-	import reign.components.Alert;
-	import reign.ui.Console;
-	import reign.utils.EmbedResUtils;
-	import reign.utils.TimeUtil;
+	import lolo.common.Common;
+	import lolo.common.ConfigManager;
+	import lolo.common.LanguageManager;
+	import lolo.common.SoundManager;
+	import lolo.common.StyleManager;
+	import lolo.components.Alert;
+	import lolo.ui.Console;
+	import lolo.ui.Stats;
+	import lolo.utils.EmbedResUtils;
+	import lolo.utils.TimeUtil;
 	
 	/**
 	 * LOLO的移动平台框架
@@ -96,6 +97,7 @@ package
 			
 			Common.stage = stage;
 			Console.getInstance().container = Common.stage;
+			Stats.getInstance().container = Common.stage;
 			
 			Common.language.initLanguage(EmbedResUtils.getXML(XmlERConstants.LANGUAGE));
 			Common.style.initStyle(EmbedResUtils.getXML(XmlERConstants.STYLE));
