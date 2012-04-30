@@ -197,7 +197,7 @@ package lolo.components
 		 */
 		private function stage_mouseMoveHandler(event:Event):void
 		{
-			if(_lastPoint.x == mouseX, _lastPoint.y == mouseY) return;
+			if(_lastPoint.x == mouseX && _lastPoint.y == mouseY) return;
 			_lastPoint = new Point(mouseX, mouseY);
 			
 			
