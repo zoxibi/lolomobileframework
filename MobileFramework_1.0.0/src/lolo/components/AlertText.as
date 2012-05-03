@@ -126,6 +126,24 @@ package lolo.components
 		
 		
 		/**
+		 * 隐藏
+		 * @param complete 是否为正常结束
+		 */
+		public function hide(complete:Boolean = false):void
+		{
+			TweenMax.killTweensOf(this);
+			
+			if(parent != null) parent.removeChild(this);
+			_parent = null;
+			
+			if(complete && callback != null) {
+				callback();
+				callback = null;
+			}
+		}
+		
+		
+		/**
 		 * 隐藏动画结束
 		 */
 		private function hideComplete():void
