@@ -46,6 +46,8 @@ package lolo.utils
 		 * @param hFormat 小时的格式["v":值，"u":单位]
 		 * @param mFormat 分钟的格式["v":值，"u":单位]
 		 * @param sFormat 秒的格式["v":值，"u":单位]
+		 * @param hFilled 是否补齐小时位
+		 * @param dToH 是否将天位转化成小时位
 		 * @return 至少包含分钟和秒的格式化时间
 		 */
 		public static function format(time:Number,
@@ -53,7 +55,9 @@ package lolo.utils
 									  dFormat:String="",
 									  hFormat:String="",
 									  mFormat:String="",
-									  sFormat:String=""):String
+									  sFormat:String="",
+									  hFilled:Boolean=false,
+									  dToH:Boolean=false):String
 		{
 			//转化成毫秒
 			time = convertType(type, TYPE_MS, time);
@@ -66,7 +70,7 @@ package lolo.utils
 			var str:String = "";
 			
 			//天
-			if(d > 0)
+			if(d > 0 && !dToH)
 			{
 				if(dFormat == "") dFormat = TimeUtil.dFormat;
 				str += dFormat.replace(/u/g, (d > 1) ? days : day);
@@ -74,11 +78,11 @@ package lolo.utils
 			}
 			
 			//小时
-			if(h > 0 || d > 0)
+			if(h > 0 || d > 0 || hFilled)
 			{
 				if(hFormat == "") hFormat = TimeUtil.hFormat;
 				str += hFormat.replace(/u/g, hour);
-				str = str.replace(/v/g, StringUtil.leadingZero(h % 24));
+				str = str.replace(/v/g, StringUtil.leadingZero(dToH ? h : h % 24));
 			}
 			
 			//分钟
