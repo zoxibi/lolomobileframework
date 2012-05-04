@@ -49,7 +49,9 @@ package lolo.data
 		public function getTime(type:String="ms"):Number
 		{
 			var time:Number = _lastTime - (getTimer() - _initTime);
-			return TimeUtil.convertType(TimeUtil.TYPE_MS, type, time);
+			time = TimeUtil.convertType(TimeUtil.TYPE_MS, type, time);
+			if(time < 0) time = 0;
+			return time;
 		}
 		
 		
