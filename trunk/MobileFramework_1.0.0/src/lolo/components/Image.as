@@ -41,6 +41,9 @@ package lolo.components
 		/**加载完成后，从不可见到可见，alpha动画的持续时间*/
 		public var showEffectDuration:Number = 0.3;
 		
+		/**图像加载完成后的回调*/
+		public var callback:Function;
+		
 		
 		public function Image()
 		{
@@ -172,6 +175,11 @@ package lolo.components
 			
 			this.alpha = 0;
 			TweenMax.to(this, showEffectDuration, { alpha:1 });
+			
+			if(callback != null) {
+				callback();
+				callback = null;
+			}
 		}
 		
 		
