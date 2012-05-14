@@ -258,9 +258,8 @@ package lolo.common
 		 */
 		public function showScene(sceneID:int, ...rest):void
 		{
-			//记录之前场景的初始化参数列表
-			_args.lastSceneRest = _args.nowSceneRest;
-			_args.nowSceneRest = rest;
+			//临时储存这次切换场景时，携带的参数。在显示的时候，再记录到当前场景参数中
+			_args.sceneArgs = rest[0];
 		}
 		
 		/**
@@ -268,10 +267,11 @@ package lolo.common
 		 */
 		public function showLastScene():void
 		{
-			if(_args.lastSceneID == null) return;
-			var rest:Array = _args.lastSceneRest[0].concat();
-			rest.unshift(_args.lastSceneID);
-			showScene.apply(null, rest);
+			if(_args.lastSceneID != null) {
+				var args:Array = _args.lastSceneArgs.concat();
+				args.unshift(_args.lastSceneID);
+				showScene.apply(null, args);
+			}
 		}
 		
 		/**
@@ -304,15 +304,17 @@ package lolo.common
 			if(_nowScene == scene) return;
 			
 			closeAllWindow();
+			
 			if(_nowScene != null) {
-				_nowScene.hide();
 				_args.lastSceneID = _nowScene.sceneID;
+				_args.lastSceneArgs = _args.currentSceneArgs;//记录到上个场景参数中
+				_nowScene.hide();
 			}
 			
 			_nowScene = scene;
+			_args.currentSceneArgs = _args.sceneArgs;//记录到当前场景参数中
 			showDisplayObject(_nowScene as DisplayObject, _sceneLayer);
 		}
-		
 		
 		
 		
