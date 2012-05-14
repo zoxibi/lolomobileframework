@@ -21,7 +21,7 @@ package lolo.components
 			
 			this.target = target;
 			
-			this.graphics.beginFill(0, 0.3);
+			this.graphics.beginFill(0, 0.001);
 			this.graphics.drawRect(0, 0, 10, 10);
 			this.graphics.endFill();
 		}
