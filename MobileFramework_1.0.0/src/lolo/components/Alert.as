@@ -134,7 +134,7 @@ package lolo.components
 			//内容、按钮等高度相加，已经超过了限制的最小高度，将以最大高度方式显示
 			if((style.labelPaddingTop + labelText.textHeight + style.labelPaddingBottom + _btnC.height + style.buttonPaddingBottom) > style.minHeight)
 			{
-				labelText.width = style.maxWidth + style.labelPaddingLeft - style.labelPaddingRight;
+				labelText.width = style.maxWidth - style.labelPaddingLeft - style.labelPaddingRight;
 				labelText.height = style.maxHeight - style.labelPaddingTop - style.labelPaddingBottom - _btnC.height - style.buttonPaddingBottom;
 				
 				_background.width = style.maxWidth;
