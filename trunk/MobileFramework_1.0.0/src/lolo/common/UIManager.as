@@ -308,7 +308,7 @@ package lolo.common
 			if(_nowScene != null) {
 				_args.lastSceneID = _nowScene.sceneID;
 				_args.lastSceneArgs = _args.currentSceneArgs;//记录到上个场景参数中
-				_nowScene.hide();
+				if(_nowScene != scene) _nowScene.hide();
 			}
 			
 			_nowScene = scene;

@@ -31,6 +31,18 @@ package lolo.utils
 			}
 			return false;
 		}
+		
+		
+		/**
+		 * 验证字符串是否为正确的邮箱地址
+		 * @param str
+		 * @return 
+		 */
+		public static function rightEmail(str:String):Boolean
+		{
+			var re:RegExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+			return re.test(str);
+		}
 		//
 	}
 }
