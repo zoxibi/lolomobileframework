@@ -16,6 +16,8 @@ package lolo.utils
 		public static const WINDOW_BLANK:String = "_blank";
 		/**在当前窗口打开*/
 		public static const WINDOW_SELF:String = "_self";
+		/**在父窗口打开*/
+		public static const WINDOW_PARENT:String = "_parent";
 		
 		
 		/**
