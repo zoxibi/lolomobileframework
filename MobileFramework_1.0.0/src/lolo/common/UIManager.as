@@ -301,8 +301,6 @@ package lolo.common
 		 */
 		protected function switchScene(scene:IScene):void
 		{
-			if(_nowScene == scene) return;
-			
 			closeAllWindow();
 			
 			if(_nowScene != null) {
