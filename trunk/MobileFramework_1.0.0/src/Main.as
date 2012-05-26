@@ -4,6 +4,7 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageAspectRatio;
 	import flash.display.StageDisplayState;
+	import flash.display.StageOrientation;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.StageOrientationEvent;
@@ -12,8 +13,6 @@ package
 	import game.common.XmlERConstants;
 	import game.module.core.view.GameUIManager;
 	import game.net.HttpService;
-	
-	import mainUI.DeveloperMovie;
 	
 	import lolo.common.Common;
 	import lolo.common.ConfigManager;
@@ -25,6 +24,8 @@ package
 	import lolo.ui.Stats;
 	import lolo.utils.EmbedResUtils;
 	import lolo.utils.TimeUtil;
+	
+	import mainUI.DeveloperMovie;
 	
 	/**
 	 * LOLO的移动平台框架
@@ -50,7 +51,7 @@ package
 			stage.stageFocusRect = false;
 			
 			Common.version = "1.0.0";
-			Common.resPath = "E:\\MobileFramework\\res\\zh_CN_v1.0.0\\";
+			Common.resPath = "C:\\工作\\MobileFramework\\res\\zh_CN_v1.0.0\\";
 			Common.serviceUrl = "http://192.168.1.100:8080/Service/";//登录和注册的URL地址
 			
 			if(Common.bin == "release")
@@ -76,6 +77,10 @@ package
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, addToStageHandler);
 			stage.addEventListener(StageOrientationEvent.ORIENTATION_CHANGE, orientationChangeHandler);
+			
+			if(stage.orientation == StageOrientation.ROTATED_RIGHT || stage.orientation == StageOrientation.ROTATED_LEFT) {
+				orientationChangeHandler();
+			}
 		}
 		
 		
