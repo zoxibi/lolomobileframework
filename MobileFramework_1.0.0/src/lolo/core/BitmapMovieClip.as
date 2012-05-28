@@ -7,11 +7,16 @@ package lolo.core
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
+	import lolo.events.BitmapMovieClipEvent;
 	import lolo.utils.AutoUtil;
 	import lolo.utils.RTimer;
 	
 	/**
 	 * 位图影片剪辑
+	 * 
+	 * 关于BitmapMovieClipEvent.ENTER_FRAME事件，与，与flash.display.MovieClip的Event.ENTER_FRAME事件不同的是：
+	 * 只会在帧刷新的时候触发该事件，而不是按照帧频不断触发
+	 * 
 	 * @author LOLO
 	 */
 	public class BitmapMovieClip extends Bitmap
@@ -43,14 +48,16 @@ package lolo.core
 		
 		/**重复播放次数*/
 		public var repeatCount:uint;
-		/**动画达到重复播放次数时的停留帧*/
+		/**动画达到重复播放次数时的停止帧*/
 		public var stopFrame:uint;
+		/**动画在完成了指定重复次数，并到达了停止帧时的回调（异常情况将不会触发回调，如：位图数据包还未初始化，帧数为0，以及重复次数为0）*/
+		public var callback:Function;
+		
 		/**动画当前已重复播放的次数*/
 		private var _currentRepeatCount:uint;
 		
 		/**用于播放动画*/
 		private var _timer:RTimer;
-		
 		
 		
 		/**
@@ -115,8 +122,9 @@ package lolo.core
 		 * @param startFrame 动画开始帧（默认值:0 为当前帧）
 		 * @param repeatCount 动画的重复播放次数（默认值:0 为无限循环）
 		 * @param stopFrame 动画达到重复播放次数时的停留帧（默认值:0 为最后一帧）
+		 * @param callback 动画在完成了指定重复次数，并到达了停止帧时的回调（异常情况将不会触发回调，如：位图数据包还未初始化，帧数为0，以及重复次数为0）
 		 */
-		public function play(startFrame:uint=0, repeatCount:uint=0, stopFrame:uint=0):void
+		public function play(startFrame:uint=0, repeatCount:uint=0, stopFrame:uint=0, callback:Function=null):void
 		{
 			if(startFrame == 0) startFrame = _currentFrame;
 			showFrame(startFrame);
@@ -124,6 +132,7 @@ package lolo.core
 			_currentRepeatCount = 0;
 			this.repeatCount = repeatCount;
 			this.stopFrame = stopFrame;
+			this.callback = callback;
 			
 			_playing = true;
 			_timer.start();
@@ -135,7 +144,7 @@ package lolo.core
 		 */
 		public function stop():void
 		{
-			_timer.reset();
+			if(_timer != null) _timer.reset();
 			_playing = false;
 		}
 		
@@ -145,10 +154,11 @@ package lolo.core
 		 * @param startFrame 动画开始帧
 		 * @param repeatCount 动画的重复播放次数（默认值:0 为无限循环）
 		 * @param stopFrame 动画达到重复播放次数时的停留帧（默认值:0 为最后一帧）
+		 * @param callback 动画在完成了指定重复次数，并到达了停止帧时的回调（异常情况将不会触发回调，如：位图数据包还未初始化，帧数为0，以及重复次数为0）
 		 */
-		public function gotoAndPlay(value:uint, repeatCount:uint=0, stopFrame:uint=0):void
+		public function gotoAndPlay(value:uint, repeatCount:uint=0, stopFrame:uint=0, callback:Function=null):void
 		{
-			play(value, repeatCount, stopFrame);
+			play(value, repeatCount, stopFrame, callback);
 		}
 		
 		
@@ -205,6 +215,8 @@ package lolo.core
 			_currentFrame = frame;
 			this.bitmapData = _frameList[_currentFrame - 1];
 			offsetPoint();
+			
+			this.dispatchEvent(new BitmapMovieClipEvent(BitmapMovieClipEvent.ENTER_FRAME));
 		}
 		
 		
@@ -333,6 +345,11 @@ package lolo.core
 			}
 			showFrame(frame);
 			
+			//只有一帧，或没有帧
+			if(_frameList.length <= 1) {
+				stop();
+				return;
+			}
 			
 			//有指定重复播放次数
 			if(repeatCount > 0) {
@@ -343,12 +360,15 @@ package lolo.core
 					//达到了重复播放次数
 					if(_currentRepeatCount >= repeatCount) {
 						stop();
+						if(callback != null) {
+							callback();
+							callback = null;
+							
+							this.dispatchEvent(new BitmapMovieClipEvent(BitmapMovieClipEvent.MOVIE_END));
+						}
 					}
 				}
 			}
-			
-			//只有一帧，或没有帧
-			if(_frameList.length <= 1) stop();
 		}
 		
 		
@@ -379,6 +399,16 @@ package lolo.core
 		 * 当前帧编号
 		 */
 		public function get currentFrame():uint { return _currentFrame; }
+		
+		
+		/**
+		 * 总帧数
+		 */
+		public function get totalFrames():uint
+		{
+			if(_frameList == null) return 0;
+			return _frameList.length;
+		}
 		
 		
 		/**
