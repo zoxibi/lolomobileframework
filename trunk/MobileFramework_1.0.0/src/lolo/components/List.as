@@ -6,7 +6,7 @@ package lolo.components
 	import lolo.data.IHashMap;
 	import lolo.events.components.ItemEvent;
 	import lolo.events.components.PageEvent;
-
+	
 	/**
 	 * 列表
 	 * @author LOLO
@@ -124,10 +124,10 @@ package lolo.components
 			for(i = 0; i < length; i++)
 			{
 				item = (_itemPool.length > 0) ? _itemPool.shift() : new _itemRendererClass();
+				addChild(item as DisplayObject);
 				item.index = i;
 				item.data = _data.getValueByIndex(i + pageIndex);
 				addItem(item);
-				addChild(item as DisplayObject);
 				
 				if(lastItem != null)
 				{
@@ -161,14 +161,14 @@ package lolo.components
 				_isFirstSetData = false;
 				if(isDefaultSelect && autoSelectItem) selectItemByIndex(0);
 			}
-			
-			//通过索引来选中子项
+				
+				//通过索引来选中子项
 			else if(_selectMode == SELECT_MODE_INDEX)
 			{
 				autoSelectItemByIndex(_currentSelectedIndex);
 			}
-			
-			//根据键来选中子项
+				
+				//根据键来选中子项
 			else
 			{
 				i = _data.getIndexByKeys(_currentSelectedKeys);
@@ -462,7 +462,10 @@ package lolo.components
 		public function dispose():void
 		{
 			clear();
-			_page = null;
+			if(_page != null) {
+				_page.dispose();
+				_page = null;
+			}
 		}
 		//
 	}

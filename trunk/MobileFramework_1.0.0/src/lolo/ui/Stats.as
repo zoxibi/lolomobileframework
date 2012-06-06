@@ -121,7 +121,6 @@ package lolo.ui
 			var mem:Number = System.totalMemory / 1024 / 1024;
 			mem = int(mem * 1000) / 1000;
 			if(mem > _maxMemory) _maxMemory = mem;
-			if(mem > 400) mem = 400;//图表中只显示最大值为400的内存
 			
 			//1秒统计2次帧频
 			if(time < 500) return;
@@ -135,6 +134,7 @@ package lolo.ui
 			var len:int = _memoryList.length;
 			for(var i:int = 0; i < len; i++) {
 				var memory:Number = _memoryList[i];
+				if(memory > 400) memory = 400;//图表中只显示最大值为400的内存
 				var x:int = i * 5 + 65;
 				var y:int = 45 - (45 / (400 / memory)) + 5;
 				
