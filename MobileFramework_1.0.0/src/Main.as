@@ -93,16 +93,16 @@ package
 		{
 			stage.removeEventListener(StageOrientationEvent.ORIENTATION_CHANGE, orientationChangeHandler);
 			
+			Common.stage = stage;
+			Console.getInstance().container = Common.stage;
+			Stats.getInstance().container = Common.stage;
+			
 			Common.style = StyleManager.getInstance();
 			Common.config = ConfigManager.getInstance();
 			Common.language = LanguageManager.getInstance();
 			Common.sound = SoundManager.getInstance();
 			Common.service = HttpService.getInstance();
 			Common.ui = GameUIManager.getInstance();
-			
-			Common.stage = stage;
-			Console.getInstance().container = Common.stage;
-			Stats.getInstance().container = Common.stage;
 			
 			Common.language.initLanguage(EmbedResUtils.getXML(XmlERConstants.LANGUAGE));
 			Common.style.initStyle(EmbedResUtils.getXML(XmlERConstants.STYLE));

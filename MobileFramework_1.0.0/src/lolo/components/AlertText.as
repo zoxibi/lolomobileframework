@@ -3,6 +3,7 @@ package lolo.components
 	import com.greensock.TweenMax;
 	
 	import flash.display.DisplayObjectContainer;
+	import flash.geom.Point;
 	import flash.text.TextFieldAutoSize;
 	import flash.utils.Dictionary;
 	
@@ -20,6 +21,10 @@ package lolo.components
 	{
 		/**实例列表*/
 		private static var _instanceList:Dictionary = new Dictionary();
+		
+		/**上次鼠标操作的位置*/
+		public static var lastMousePoint:Point = new Point();
+		
 		
 		/**该时间后显示（该时间后播放显示动画）*/
 		public var showDelay:Number;
@@ -164,8 +169,8 @@ package lolo.components
 		 */
 		public function moveToStageMousePosition():void
 		{
-			this.x = Common.stage.mouseX;
-			this.y = Common.stage.mouseY;
+			this.x = lastMousePoint.x;
+			this.y = lastMousePoint.y;
 		}
 		
 		

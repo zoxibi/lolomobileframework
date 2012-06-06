@@ -1,6 +1,8 @@
 package game.module.core.view
 {
 	import flash.display.DisplayObject;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import game.common.GameConstants;
 	import game.module.gameUI.view.GameUI;
@@ -12,6 +14,7 @@ package game.module.core.view
 	import lolo.common.Common;
 	import lolo.common.Constants;
 	import lolo.common.UIManager;
+	import lolo.components.AlertText;
 
 	/**
 	 * 游戏用户界面管理
@@ -53,6 +56,10 @@ package game.module.core.view
 		override public function init():void
 		{
 			super.init();
+			
+			Common.stage.addEventListener(MouseEvent.MOUSE_DOWN, stage_mouseDownHandler, true, 1);
+			Common.stage.addEventListener(MouseEvent.MOUSE_MOVE, stage_mouseMoveHandler, true, 1);
+			
 			_requestModal = new RequestModal();
 			_gameUI = new GameUI();
 			
@@ -138,6 +145,28 @@ package game.module.core.view
 //			openOrCloseWindow(_mail, args[0]);
 		}
 		
+		
+		
+		
+		
+		
+		/**
+		 * 鼠标在舞台按下
+		 * @param event
+		 */
+		private function stage_mouseDownHandler(event:MouseEvent):void
+		{
+			AlertText.lastMousePoint = new Point(Common.stage.mouseX, Common.stage.mouseY);
+		}
+		
+		/**
+		 * 鼠标在舞台移动
+		 * @param event
+		 */
+		private function stage_mouseMoveHandler(event:MouseEvent):void
+		{
+			AlertText.lastMousePoint = new Point(Common.stage.mouseX, Common.stage.mouseY);
+		}
 		
 		
 		
