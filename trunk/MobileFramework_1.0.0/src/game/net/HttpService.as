@@ -66,7 +66,6 @@ package game.net
 			loader.close();
 			loader.callback = callback;
 			loader.alertError = alertError;
-			loader.mousePoint = new Point(Common.stage.mouseX, Common.stage.mouseY);
 			
 			var url:String = Common.serviceUrl + rm.command + "?t=" + rm.token;
 			var request:URLRequest = new URLRequest(url);
@@ -177,8 +176,7 @@ package game.net
 			if(!success && loader.alertError)
 			{
 				var alertText:AlertText = AlertText.getInstance("serviceError");
-				alertText.x = loader.mousePoint.x;
-				alertText.y = loader.mousePoint.y;
+				alertText.moveToStageMousePosition();
 				alertText.show(data.msg);
 			}
 			
