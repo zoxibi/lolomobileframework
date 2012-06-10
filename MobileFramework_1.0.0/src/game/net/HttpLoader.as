@@ -1,11 +1,9 @@
 package game.net
 {
-	import flash.geom.Point;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	
-	import lolo.common.Common;
 	import lolo.data.RequestModel;
 	
 	/**
@@ -16,8 +14,6 @@ package game.net
 	{
 		/**对应的通信接口模型*/
 		public var requestModel:RequestModel;
-		/**获取数据时的鼠标坐标*/
-		public var mousePoint:Point;
 		
 		/**获取数据结果的回调函数*/
 		public var callback:Function;
@@ -36,8 +32,6 @@ package game.net
 		
 		override public function load(request:URLRequest):void
 		{
-			mousePoint = new Point(Common.stage.mouseX, Common.stage.mouseY);
-			
 			super.load(request);
 		}
 		
