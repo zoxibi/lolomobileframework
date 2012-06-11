@@ -3,7 +3,7 @@ package lolo.components
 	import com.greensock.TweenMax;
 	
 	import lolo.common.Common;
-
+	
 	/**
 	 * 显示数字的文本
 	 * 在值上升或下降时，闪动颜色
@@ -52,6 +52,8 @@ package lolo.components
 		
 		override public function set text(value:String):void
 		{
+			if(!isNaN(_newValue)) super.text = _newValue.toString();
+			
 			_newValue = Number(value);
 			
 			if(isNaN(_newValue))
@@ -64,6 +66,7 @@ package lolo.components
 			if(_originalText == "init")
 			{
 				super.text = _newValue.toString();
+				_newValue = NaN;
 				return;
 			}
 			
@@ -92,6 +95,7 @@ package lolo.components
 			if(count >= 10)
 			{
 				super.text = _newValue.toString();
+				_newValue = NaN;
 				
 				if(callback != null) {
 					callback();
@@ -107,7 +111,7 @@ package lolo.components
 		
 		
 		/**
-		 * 改编值
+		 * 改变值
 		 * @param value 新值
 		 * @param callback 动画播放完成后，更新成新值时的回调函数
 		 */
