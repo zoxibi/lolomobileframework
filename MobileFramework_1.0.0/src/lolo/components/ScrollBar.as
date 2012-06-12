@@ -30,7 +30,8 @@ package lolo.components
 		
 		/**滑块*/
 		private var _thumb:Sprite;
-		
+		/**内容的遮罩*/
+		private var _contentMask:Mask;
 		/**滚动的内容*/
 		private var _content:Sprite;
 		/**内容的显示区域（滚动区域）*/
@@ -516,11 +517,13 @@ package lolo.components
 				_content.x = _disArea.x;
 				_content.y = _disArea.y;
 				
-				var mask:Mask = new Mask();
-				mask.target = _content;
-				mask.x = _disArea.x;
-				mask.y = _disArea.y;
-				mask.rect = { width:_disArea.width, height:_disArea.height };
+				if(_contentMask == null) {
+					_contentMask = new Mask();
+					_contentMask.target = _content;
+				}
+				_contentMask.x = _disArea.x;
+				_contentMask.y = _disArea.y;
+				_contentMask.rect = { width:_disArea.width, height:_disArea.height };
 				
 				if(_direction == VERTICAL) {
 					_thumb.x = _disArea.x + _disArea.width - _thumb.width;
@@ -590,6 +593,17 @@ package lolo.components
 		 * 当前是否显示（内容尺寸是否超出了显示区域）
 		 */
 		public function get isShow():Boolean { return _isShow; }
+		
+		
+		
+		/**
+		 * 用于清理引用，释放内存
+		 * 在丢弃该组件时，需要主动调用该方法
+		 */
+		public function dispose():void
+		{
+			if(_contentMask != null) _contentMask.dispose();
+		}
 		//
 	}
 }
