@@ -63,7 +63,7 @@ package lolo.core
 		/**
 		 * 周期清理数据
 		 */
-		private function clearTimerHandler():void
+		private static function clearTimerHandler():void
 		{
 			//克隆一份_data进行，稍候对其进行for操作
 			var list:Dictionary = new Dictionary();
