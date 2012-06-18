@@ -64,7 +64,7 @@ package lolo.utils
 			
 			var h:int = time / 3600000;
 			var m:int = (time % 3600000) / 60000;
-			var s:int = (time % 3600000) % 60000 / 1000;
+			var s:int = Math.ceil((time % 3600000) % 60000 / 1000);
 			var d:int = h / 24;
 			
 			var str:String = "";
