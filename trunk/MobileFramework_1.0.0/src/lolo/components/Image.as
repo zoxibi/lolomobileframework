@@ -1,10 +1,10 @@
-
 package lolo.components
 {
 	import com.greensock.TweenMax;
 	
 	import flash.display.Bitmap;
 	import flash.display.Loader;
+	import flash.display.LoaderInfo;
 	import flash.events.Event;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
@@ -23,6 +23,8 @@ package lolo.components
 		private static var _data:Dictionary = new Dictionary();
 		/**用于周期清理数据*/
 		private static var _clearTimer:RTimer;
+		/**初始化信息的时候，临时储存图像的相关信息*/
+		private static var _tempLoaderDic:Dictionary = new Dictionary();
 		
 		
 		/**图像数据包的名称*/
@@ -48,6 +50,7 @@ package lolo.components
 		public function Image()
 		{
 			super();
+			this.smoothing = true;
 			
 			if(_clearTimer == null) {
 				_clearTimer = RTimer.getInstance(3 * 60 * 1000, clearTimerHandler);
@@ -60,7 +63,7 @@ package lolo.components
 		/**
 		 * 周期清理数据
 		 */
-		private function clearTimerHandler():void
+		private static function clearTimerHandler():void
 		{
 			//克隆一份_data进行，稍候对其进行for操作
 			var list:Dictionary = new Dictionary();
@@ -86,6 +89,51 @@ package lolo.components
 				}
 			}
 		}
+		
+		
+		
+		/**
+		 * 初始化指定图像数据包，将包中所有位图数据提出来
+		 * @param packageName 数据包名称
+		 * @param save 是否常驻内存
+		 */
+		public static function initPackage(packageName:String, save:Boolean=true):void
+		{
+			var zip:ZipReader = new ZipReader(EmbedResUtils.getImgPackage(packageName));
+			var bytes:ByteArray;
+			var loader:Loader;
+			//去掉后缀，得到名称
+			for(var i:int = 0; i < zip.entries.length; i++)
+			{
+				var fName:String = zip.entries[i].name.split(".")[0];
+				if(_data[packageName + "/" + fName] == null)
+				{
+					bytes = zip.getFile(zip.entries[i].name);
+					loader = new Loader();
+					_tempLoaderDic[loader] = { pName:packageName, fName:fName, save:save };
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loaderCompleteHandler);
+					loader.loadBytes(bytes);
+				}
+			}
+		}
+		
+		private static function loaderCompleteHandler(event:Event):void
+		{
+			var loader:Loader = LoaderInfo(event.target).loader;
+			var data:Object = _tempLoaderDic[loader];
+			
+			_data[data.pName + "/" + data.fName] = {
+				data	: (loader.content as Bitmap).bitmapData.clone(),
+					count	: (data.save ? 1 : 0)
+			};
+			
+			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loaderCompleteHandler);
+			loader.unload();
+			delete _tempLoaderDic[loader];
+		}
+		
+		
+		
 		
 		
 		
@@ -139,6 +187,11 @@ package lolo.components
 				
 				if(bytes == null) {	
 					trace("Image 获取", _title, _id, "失败！");
+					//尝试加载默认图片
+					if(_id != "default") {
+						_id = "default";
+						showImage();
+					}
 					return;
 				}
 				
