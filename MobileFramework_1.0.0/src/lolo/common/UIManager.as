@@ -275,6 +275,15 @@ package lolo.common
 		}
 		
 		/**
+		 * 获取上一个场景的ID
+		 * @return 
+		 */
+		public function get lastSceneID():int
+		{
+			return _args.lastSceneID;
+		}
+		
+		/**
 		 * 获取当前场景的ID，没有进入场景时，值为0（默认）
 		 * @return 
 		 */
