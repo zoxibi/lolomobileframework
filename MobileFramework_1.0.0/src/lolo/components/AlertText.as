@@ -139,7 +139,7 @@ package lolo.components
 			TweenMax.killTweensOf(this);
 			
 			if(parent != null) parent.removeChild(this);
-			_parent = null;
+			if(alertLayerShow) _parent = null;
 			
 			if(complete && callback != null) {
 				callback();
@@ -154,7 +154,7 @@ package lolo.components
 		private function hideComplete():void
 		{
 			if(parent != null) parent.removeChild(this);
-			_parent = null;
+			if(alertLayerShow) _parent = null;
 			
 			if(callback != null)
 			{

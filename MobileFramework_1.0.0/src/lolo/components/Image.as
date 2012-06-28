@@ -74,7 +74,7 @@ package lolo.components
 			for(key in list) {
 				info = _data[key];
 				//位图数据已经没有在使用了
-				if(info.count == 0) {
+				if(info.count <= 0) {
 					//已经被标记过，可以被清除
 					if(info.prepareClear) {
 						info.data.dispose();
@@ -174,7 +174,7 @@ package lolo.components
 			if(_title == null || _id == null) return;
 			
 			//还没创建过图像
-			if(_data[_title + "/" + _id] == null)
+			if(info == null)
 			{
 				var zip:ZipReader = new ZipReader(EmbedResUtils.getImgPackage(_title));
 				var bytes:ByteArray;
@@ -213,15 +213,12 @@ package lolo.components
 			if(_loader != null)
 			{
 				_data[_title + "/" + _id] = { data:(_loader.content as Bitmap).bitmapData.clone(), count:0 };
-				
-				_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, completeHandler);
-				_loader.unload();
-				_loader = null;
+				clearLoader();
 			}
 			
 			
-			bitmapData = _data[_title + "/" + _id].data;
-			_data[_title + "/" + _id].count++;
+			bitmapData = info.data;
+			info.count++;
 			
 			if(_widht > 0) super.width = _widht;
 			if(_height > 0) super.height = _height;
@@ -236,6 +233,35 @@ package lolo.components
 		}
 		
 		
+		/**
+		 * 获取相关的图像信息
+		 * @return 
+		 */
+		private function get info():Object
+		{
+			return _data[_title + "/" + _id];
+		}
+		
+		/**
+		 * 清除loader
+		 * @return 
+		 */
+		private function clearLoader():void
+		{
+			if(_loader != null)
+			{
+				try { _loader.close(); }
+				catch(error:Error) {}
+				
+				try { _loader.unload(); }
+				catch(error:Error) {}
+				
+				_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, completeHandler);
+				_loader = null;
+			}
+		}
+		
+		
 		
 		
 		/**
@@ -243,9 +269,11 @@ package lolo.components
 		 */
 		public function dispose():void
 		{
+			clearLoader();
+			
 			if(bitmapData != null) {
 				bitmapData = null;
-				_data[_title + "/" + _id].count--;
+				if(info != null) info.count--;
 			}
 		}
 		
