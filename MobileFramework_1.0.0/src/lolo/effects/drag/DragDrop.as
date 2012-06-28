@@ -6,7 +6,9 @@ package lolo.effects.drag
 	import flash.display.DisplayObjectContainer;
 	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import lolo.common.Common;
 	import lolo.common.Constants;
@@ -30,6 +32,9 @@ package lolo.effects.drag
 		
 		/**是否在拖动开始时，自动改变拖动对象的属性，达到区别的效果*/
 		private var _autoChangeDragTarget:Boolean = true;
+		
+		/**绘制时的矩形信息*/
+		private var _drawRect:Rectangle;
 		
 		
 		public function DragDrop(dragTarget:IDragTarget=null)
@@ -88,8 +93,8 @@ package lolo.effects.drag
 				dispatchEvent(new DragDropEvent(DragDropEvent.DRAG_MOVE, _dragTarget, dropTarget));
 			}
 			
-			this.x = event.stageX - _mouseDownPoint.x;
-			this.y = event.stageY - _mouseDownPoint.y;
+			this.x = event.stageX - _mouseDownPoint.x + _drawRect.x;
+			this.y = event.stageY - _mouseDownPoint.y + _drawRect.y;
 			event.updateAfterEvent();
 		}
 		
@@ -191,7 +196,14 @@ package lolo.effects.drag
 			return dropTarget;
 		}
 		
-		
+		/**
+		 * 设置鼠标按下时的位置（拖动图像的偏移值）
+		 * @param value
+		 */
+		public function set mouseDownPoint(value:Point):void
+		{
+			_mouseDownPoint = value;
+		}
 		
 		
 		/**
@@ -201,8 +213,10 @@ package lolo.effects.drag
 		public function drawDragTarget():void
 		{
 			if(bitmapData != null) bitmapData.dispose();
-			bitmapData = new BitmapData(_dragTarget.source.width, _dragTarget.source.height, true, 0);
-			bitmapData.draw(_dragTarget.source);
+			
+			_drawRect = _dragTarget.source.getBounds(_dragTarget.source);
+			bitmapData = new BitmapData(_drawRect.width, _drawRect.height, true, 0);
+			bitmapData.draw(_dragTarget.source, new Matrix(1, 0, 0, 1, -_drawRect.x, -_drawRect.y));
 			
 			Common.ui.addChildToLayer(this, Constants.LAYER_NAME_ALERT);
 		}
@@ -249,6 +263,12 @@ package lolo.effects.drag
 			
 			_dragTargetProp = null;
 			dragTarget = null;
+			
+			if(_dragTarget != null) {
+				(_dragTarget as IEventDispatcher).removeEventListener(MouseEvent.MOUSE_DOWN, dragTarget_mouseDownHandler);
+			}
+			Common.stage.removeEventListener(MouseEvent.MOUSE_MOVE, stage_mouseMoveHandler);
+			Common.stage.removeEventListener(MouseEvent.MOUSE_UP, stage_mouseUpHandler);
 		}
 		//
 	}

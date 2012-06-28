@@ -307,9 +307,10 @@ package lolo.utils
 				catch(error:Error) {
 					trace("\n");
 					trace("-=-=-=-=-=-=-=-=-= initObject Error =-=-=-=-=-=-=-=-=-");
-					trace("   target:", target);
+					trace("     error:", error);
+					trace("    target:", target);
 					trace("properties:", properties);
-					trace("    value:", target[properties]);
+					trace("     value:", obj[properties]);
 					trace("-=-=-=-=-=-=-=-=-=-=-=-=- END =-=-=-=-=-=-=-=-=-=-=-=-");
 					trace("\n");
 				}
