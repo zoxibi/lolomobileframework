@@ -5,7 +5,6 @@ package game.net
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
-	import flash.geom.Point;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
@@ -66,6 +65,7 @@ package game.net
 			loader.close();
 			loader.callback = callback;
 			loader.alertError = alertError;
+			if(alertError) loader.mousePoint = AlertText.lastMousePoint.clone();
 			
 			var url:String = Common.serviceUrl + rm.command + "?t=" + rm.token;
 			var request:URLRequest = new URLRequest(url);
@@ -176,7 +176,8 @@ package game.net
 			if(!success && loader.alertError)
 			{
 				var alertText:AlertText = AlertText.getInstance("serviceError");
-				alertText.moveToStageMousePosition();
+				alertText.x = loader.mousePoint.x;
+				alertText.y = loader.mousePoint.y;
 				alertText.show(data.msg);
 			}
 			

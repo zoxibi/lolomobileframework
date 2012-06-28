@@ -333,7 +333,7 @@ package lolo.utils
 		/**
 		 * 自动对齐目标
 		 * @param target
-		 * @param args //可用属性[width, height, paddingRight, addX, paddingBottom, addY]
+		 * @param args 可用属性[width, height, paddingRight, addX, paddingBottom, addY, cancelH, cancelV]
 		 */
 		public static function autoAlign(target:DisplayObject, args:Object):void
 		{
@@ -346,7 +346,7 @@ package lolo.utils
 			if(args.paddingRight != null) {
 				target.x = Common.ui.stageWidth - width - args.paddingRight;
 			}
-			else {
+			else if(args.cancelH == null) {
 				target.x = (Common.ui.stageWidth - width) / 2;
 				if(args.addX != null) target.x += args.addX;
 			}
@@ -355,7 +355,7 @@ package lolo.utils
 			if(args.paddingBottom != null) {
 				target.y = Common.ui.stageHeight - height - args.paddingBottom;
 			}
-			else {
+			else if(args.cancelV == null) {
 				target.y = (Common.ui.stageHeight - height) / 2;
 				if(args.addY != null) target.y += args.addY;
 			}
