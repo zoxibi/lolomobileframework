@@ -31,6 +31,7 @@ package lolo.utils
 	import lolo.components.RichText;
 	import lolo.components.ScrollBar;
 	import lolo.components.ToolTip;
+	import lolo.core.BitmapMovieClip;
 	import lolo.core.Container;
 	
 	/**
@@ -76,6 +77,11 @@ package lolo.utils
 					//普通容器(flash.display.Sprite)
 					case "sprite":
 						if(obj == null) obj = new Sprite();
+						break;
+					
+					//位图影片剪辑
+					case "bitmapMC":
+						if(obj == null) obj = new BitmapMovieClip();
 						break;
 					
 					//显示文本
@@ -215,7 +221,7 @@ package lolo.utils
 					{
 						if(parent != "null") (target[parent] as DisplayObjectContainer).addChild(obj);
 					}
-					//不是模态背景和遮罩
+						//不是模态背景和遮罩
 					else if(!(obj is ModalBackground) && !(obj is Mask))
 					{
 						target.addChild(obj);
