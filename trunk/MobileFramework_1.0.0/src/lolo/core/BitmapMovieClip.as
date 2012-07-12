@@ -266,8 +266,8 @@ package lolo.core
 				_data[_sourceName].count++;
 				_frameList = _data[_sourceName].frameList;
 			}
-			
-			//新动画数据不存在，创建新动画
+				
+				//新动画数据不存在，创建新动画
 			else
 			{
 				var mc:MovieClip = AutoUtil.getInstance(_sourceName);
@@ -355,7 +355,10 @@ package lolo.core
 			if(repeatCount > 0) {
 				//到达停止帧
 				var stopFrame:uint = (this.stopFrame == 0) ? _frameList.length : this.stopFrame;
-				if(_currentFrame == stopFrame) {
+				if(_currentFrame == stopFrame)
+				{
+					this.dispatchEvent(new BitmapMovieClipEvent(BitmapMovieClipEvent.ENTER_STOP_FRAME));
+					
 					_currentRepeatCount++;
 					//达到了重复播放次数
 					if(_currentRepeatCount >= repeatCount) {
@@ -363,9 +366,8 @@ package lolo.core
 						if(callback != null) {
 							callback();
 							callback = null;
-							
-							this.dispatchEvent(new BitmapMovieClipEvent(BitmapMovieClipEvent.MOVIE_END));
 						}
+						this.dispatchEvent(new BitmapMovieClipEvent(BitmapMovieClipEvent.MOVIE_END));
 					}
 				}
 			}
