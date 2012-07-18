@@ -97,7 +97,7 @@ package lolo.effects
 			if(_selectedTarget != null) {
 				_selectedTarget.addEventListener(MouseEvent.ROLL_OVER, mouseOverHandler);
 				_selectedTarget.addEventListener(MouseEvent.ROLL_OUT, mouseOutHandler);
-				_selectedTarget.dispatchEvent(new MouseEvent(MouseEvent.ROLL_OVER));
+				_selectedTarget.dispatchEvent(new MouseEvent(MouseEvent.ROLL_OUT));
 			}
 			
 			_selectedTarget = target;
