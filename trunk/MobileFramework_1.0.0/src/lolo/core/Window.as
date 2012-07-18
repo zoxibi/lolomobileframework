@@ -48,7 +48,7 @@ package lolo.core
 			_closeBtn = AutoUtil.init(new BaseButton(), this);
 			_panelC = AutoUtil.init(new Sprite(), this);
 			
-			style = Common.style.getStyle("window");
+			styleName = "window";
 			Common.ui.centerToStage(this);
 			_panelList = new Dictionary();
 			
@@ -73,6 +73,16 @@ package lolo.core
 			}
 			if(value.closeBtnProp != null) closeBenProp = value.closeBtnProp;
 		}
+		
+		
+		/**
+		 * 样式的名称
+		 */
+		public function set styleName(value:String):void
+		{
+			style = Common.style.getStyle(value);
+		}
+		
 		
 		
 		/**
