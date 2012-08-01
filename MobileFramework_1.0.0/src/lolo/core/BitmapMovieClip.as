@@ -351,24 +351,21 @@ package lolo.core
 				return;
 			}
 			
-			//有指定重复播放次数
-			if(repeatCount > 0) {
-				//到达停止帧
-				var stopFrame:uint = (this.stopFrame == 0) ? _frameList.length : this.stopFrame;
-				if(_currentFrame == stopFrame)
-				{
-					this.dispatchEvent(new BitmapMovieClipEvent(BitmapMovieClipEvent.ENTER_STOP_FRAME));
-					
-					_currentRepeatCount++;
-					//达到了重复播放次数
-					if(_currentRepeatCount >= repeatCount) {
-						stop();
-						if(callback != null) {
-							callback();
-							callback = null;
-						}
-						this.dispatchEvent(new BitmapMovieClipEvent(BitmapMovieClipEvent.MOVIE_END));
+			//到达停止帧
+			var stopFrame:uint = (this.stopFrame == 0) ? _frameList.length : this.stopFrame;
+			if(_currentFrame == stopFrame)
+			{
+				this.dispatchEvent(new BitmapMovieClipEvent(BitmapMovieClipEvent.ENTER_STOP_FRAME));
+				
+				_currentRepeatCount++;
+				//有指定重复播放次数，并且达到了重复播放次数
+				if(repeatCount > 0 && _currentRepeatCount >= repeatCount) {
+					stop();
+					if(callback != null) {
+						callback();
+						callback = null;
 					}
+					this.dispatchEvent(new BitmapMovieClipEvent(BitmapMovieClipEvent.MOVIE_END));
 				}
 			}
 		}
