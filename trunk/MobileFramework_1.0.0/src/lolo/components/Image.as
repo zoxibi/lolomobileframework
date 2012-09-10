@@ -124,7 +124,7 @@ package lolo.components
 			
 			_data[data.pName + "/" + data.fName] = {
 				data	: (loader.content as Bitmap).bitmapData.clone(),
-					count	: (data.save ? 1 : 0)
+				count	: (data.save ? 1 : 0)
 			};
 			
 			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loaderCompleteHandler);
@@ -210,11 +210,10 @@ package lolo.components
 		 */
 		private function completeHandler(event:Event = null):void
 		{
-			if(_loader != null)
-			{
+			if(_data[_title + "/" + _id] == null) {
 				_data[_title + "/" + _id] = { data:(_loader.content as Bitmap).bitmapData.clone(), count:0 };
-				clearLoader();
 			}
+			if(_loader != null) clearLoader();
 			
 			
 			bitmapData = info.data;
