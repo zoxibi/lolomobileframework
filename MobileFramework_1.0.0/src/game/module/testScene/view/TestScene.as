@@ -4,6 +4,7 @@ package game.module.testScene.view
 	
 	import lolo.common.Common;
 	import lolo.components.Image;
+	import lolo.components.Label;
 	import lolo.core.Scene;
 	
 	/**
@@ -13,6 +14,10 @@ package game.module.testScene.view
 	public class TestScene extends Scene implements ITestScene
 	{
 		private var img:Image;
+		
+		private var label:Label;
+		
+		
 		
 		public function TestScene()
 		{
@@ -26,6 +31,9 @@ package game.module.testScene.view
 			img.title = "animalPic";
 			this.addChild(img);
 			
+			label = new Label();
+			label.multiline = true;
+			this.addChild(label);
 			
 			Common.stage.addEventListener(MouseEvent.MOUSE_DOWN, test);
 		}
@@ -38,7 +46,10 @@ package game.module.testScene.view
 		private function test(event:MouseEvent):void
 		{
 			var id:int = int(Math.random() * 3 + 1);
-			img.id = id;
+//			for(var i:int = 0; i < 10; i++) {
+				img.id = id;
+//			}
+			
 		}
 		//
 	}
