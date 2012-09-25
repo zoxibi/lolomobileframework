@@ -34,7 +34,7 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_agent.swc" useDefaultLinkType="false"/>
         </excludedEntries>
       </libraryPathEntry>
-      <libraryPathEntry kind="1" linkType="1" path="C:/工作/MobileFramework/res/zh_CN_v1.0.0/swc"/>
+      <libraryPathEntry kind="1" linkType="1" path="E:/MobileFramework/res/zh_CN_v1.0.0/swc"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -47,16 +47,18 @@
   <buildCSSFiles/>
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
   <buildTargets>
-    <buildTarget buildTargetName="com.adobe.flexide.multiplatform.ios.platform" iosSettingsVersion="1" provisioningFile="C:/Users/luozc/Desktop/IOS璇佷功/mobileprovision.mobileprovision" releasePackageType="ipa-app-store">
-      <airSettings airCertificatePath="C:/Users/luozc/Desktop/IOS璇佷功/p12.p12" airTimestamp="true" anePathSet="true" version="1">
+    <buildTarget buildTargetName="com.adobe.flexide.multiplatform.ios.platform" iosSettingsVersion="1" provisioningFile="C:/Users/luozc/Desktop/新建文件夹/IOS证书/mobileprovision.mobileprovision" releasePackageType="ipa-app-store">
+      <airSettings airCertificatePath="C:/Users/luozc/Desktop/新建文件夹/IOS证书/p12.p12" airTimestamp="true" anePathSet="true" version="1">
         <airExcludes/>
-        <anePaths/>
+        <anePaths>
+          <anePathEntry path="C:/Users/luozc/Desktop/测试脚本/IOSAPP.ane"/>
+        </anePaths>
       </airSettings>
       <multiPlatformSettings enabled="true" includePlatformLibs="false" platformID="com.adobe.flexide.multiplatform.ios.platform" version="2"/>
       <actionScriptSettings version="1"/>
     </buildTarget>
     <buildTarget airDownloadURL="https://market.android.com/details?id=com.adobe.air" androidSettingsVersion="1" buildTargetName="com.adobe.flexide.multiplatform.android.platform">
-      <airSettings airCertificatePath="C:/Users/luozc/Desktop/IOS璇佷功/p12.p12" airTimestamp="true" anePathSet="true" version="1">
+      <airSettings airCertificatePath="C:/Users/luozc/Desktop/IOS鐠囦椒鍔�p12.p12" airTimestamp="true" anePathSet="true" version="1">
         <airExcludes/>
         <anePaths/>
       </airSettings>
@@ -64,7 +66,7 @@
       <actionScriptSettings version="1"/>
     </buildTarget>
     <buildTarget buildTargetName="default">
-      <airSettings airCertificatePath="C:/Users/LOLO/Desktop/iOS APP 鐠囦椒鍔�p12.p12" airTimestamp="true" anePathSet="true" version="1">
+      <airSettings airCertificatePath="C:/Users/LOLO/Desktop/iOS APP 閻犲洣妞掗崝锟絧12.p12" airTimestamp="true" anePathSet="true" version="1">
         <airExcludes/>
         <anePaths/>
       </airSettings>

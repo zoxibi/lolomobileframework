@@ -53,7 +53,7 @@ package lolo.components
 			this.smoothing = true;
 			
 			if(_clearTimer == null) {
-				_clearTimer = RTimer.getInstance(3 * 60 * 1000, clearTimerHandler);
+				_clearTimer = RTimer.getInstance(1 * 1 * 1000, clearTimerHandler);
 				_clearTimer.start();
 			}
 		}
@@ -143,8 +143,6 @@ package lolo.components
 		 */
 		public function set title(value:String):void
 		{
-			dispose();
-			
 			_title = value;
 			showImage();
 		}
@@ -156,8 +154,6 @@ package lolo.components
 		 */
 		public function set id(value:*):void
 		{
-			dispose();
-			
 			_id = value;
 			showImage();
 		}
@@ -171,6 +167,7 @@ package lolo.components
 		 */
 		private function showImage():void
 		{
+			dispose();
 			if(_title == null || _id == null) return;
 			
 			//还没创建过图像

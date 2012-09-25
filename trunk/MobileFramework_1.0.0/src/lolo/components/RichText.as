@@ -286,7 +286,10 @@ package lolo.components
 				_containerController.setCompositionSize(_width, _height);
 			
 			//有内容
-			if(_textFlow.numChildren > 0) _textFlow.flowComposer.updateAllControllers();
+			if(_textFlow.numChildren > 0) {
+				_textFlow.flowComposer.compose();
+				_textFlow.flowComposer.updateAllControllers();
+			}
 		}
 		
 		
