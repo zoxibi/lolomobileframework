@@ -226,7 +226,7 @@ package lolo.components
 				case STATE_SELECTED_OVER:
 					_labelText.switchStyle(LinkText.STYLE_SELECTED);
 					break;
-				case STATE_SELECTED_UP:
+				case STATE_SELECTED_DOWN:
 					_labelText.switchStyle(LinkText.STYLE_SELECTED);
 					break;
 				case STATE_SELECTED_DISABLED:

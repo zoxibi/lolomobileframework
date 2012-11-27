@@ -66,6 +66,10 @@ package lolo.utils
 			var m:int = (time % 3600000) / 60000;
 			var s:int = Math.ceil((time % 3600000) % 60000 / 1000);
 			var d:int = h / 24;
+			if(s == 60) {
+				s = 0;
+				m++;
+			}
 			
 			var str:String = "";
 			
