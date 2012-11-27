@@ -46,11 +46,9 @@ package lolo.common
 		{
 			_language = new Dictionary();
 			
-			for(var i:int = 0; i < config.item.length(); i++)
+			for each(var item:XML in config.item)
 			{
-				var content:String = config.item[i];
-				content = content.replace(/\[br\]/g, "\n");
-				_language[String(config.item[i].@id)] = content;
+				_language[String(item.@id)] = item.toString().replace(/\[br\]/g, "\n");
 			}
 		}
 		
